@@ -1,7 +1,7 @@
 #include "mem.h"
 #include "cpu.h"
 
-void *memcpy(void *dest, const void *src, size_t nbytes) {
+void *loader_memcpy(void *dest, const void *src, size_t nbytes) {
     for (size_t i = 0; i < nbytes; i++) {
         *(byte *) (dest + i) = *(byte *) (src + i);
     }
@@ -9,7 +9,7 @@ void *memcpy(void *dest, const void *src, size_t nbytes) {
     return dest;
 }
 
-void memset(void *dest, byte cb, size_t nbytes) {
+void loader_memset(void *dest, byte cb, size_t nbytes) {
     for (size_t i = 0; i < nbytes; i++) {
         *(byte *) (dest + i) = cb;
     }
@@ -59,7 +59,7 @@ int mem_set_rwx(void *mem, size_t len) {
     return ret;
 }
 
-int ASM_NAKED exit(int exitcode) {
+void ASM_NAKED loader_exit(int exitcode) {
     __asm__ volatile (
         ".intel_syntax noprefix;"
         "mov    eax, 60;"
@@ -68,7 +68,7 @@ int ASM_NAKED exit(int exitcode) {
     );
 }
 
-void ASM_NAKED print(int fd, const char *buf, size_t slen) {
+void ASM_NAKED loader_print(int fd, const char *buf, size_t slen) {
     __asm__ volatile (
         ".intel_syntax noprefix;"
         "push 1;"
