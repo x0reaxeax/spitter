@@ -16,16 +16,16 @@ all: loader
 library: SLIB+=-D LOADER_LIB -fPIC -shared
 
 library: $(OBJ)
-    $(CC) $(SLIB) $(FLG) -c $(SRC) -o l0ader.o
-    ar sr $(LOUT) $(OBJ) $(LOBJ)
+	$(CC) $(SLIB) $(FLG) -c $(SRC) -o l0ader.o
+	ar sr $(LOUT) $(OBJ) $(LOBJ)
 
 loader: $(OBJ)
-    $(CC) $(FLG) $(SRC) -o $@ $^
+	$(CC) $(FLG) $(SRC) -o $@ $^
 
 %.o: %.c $(HDR)
-    $(CC) $(SLIB) $(FLG) -c -o $@ $<
+	$(CC) $(SLIB) $(FLG) -c -o $@ $<
 
 .PHONY: clean
 
 clean:
-    rm -f $(OBJ) $(LOBJ) $(OUT) $(LOUT)
+	rm -f $(OBJ) $(LOBJ) $(OUT) $(LOUT)
