@@ -8,13 +8,12 @@ FLG = -nostdlib	\
 SRC = loader.c
 LOUT= libl0ader.a
 LOBJ= l0ader.o
-ifdef lib
-SLIB= -D LOADER_LIB -fPIC -shared
-all: library
-else
-all: loader
-endif
 
+all: loader
+
+.PHONY: library
+
+library: SLIB+=-D LOADER_LIB -fPIC -shared
 
 library: $(OBJ)
 	$(CC) $(SLIB) $(FLG) -c $(SRC) -o l0ader.o
@@ -25,6 +24,8 @@ loader: $(OBJ)
 
 %.o: %.c $(HDR)
 	$(CC) $(SLIB) $(FLG) -c -o $@ $<
+
+.PHONY: clean
 
 clean:
 	rm -f $(OBJ) $(LOBJ) $(OUT) $(LOUT)
